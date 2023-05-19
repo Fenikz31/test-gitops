@@ -28,6 +28,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
       - name: Run app
-        run: yarn dev
+        run: docker compose up -d
       - name: check /about
-        run: curl localhost:3002/about | jq '.npm_package_version' -r
+        run: curl localhost:3003/about | jq '.npm_package_version' -r
