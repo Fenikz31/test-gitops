@@ -6,7 +6,7 @@ services:
     command: yarn dev
     container_name: app
     environment:
-      PORT: ${PORT}
+      PORT: ${PORT:-3003}
     working_dir: /usr/share/app
     ports:
       - 3003:3003
