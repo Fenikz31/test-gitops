@@ -1,0 +1,16 @@
+name: learn-github-actions
+run-name: ${{ github.actor }} is learning GitHub Actions
+on:
+  push:
+    branches:
+    - dev
+    - main
+
+jobs:
+  test:
+    runs-on: [ self-hosted, linux, x64, vm-01 ]
+    steps:
+      - name: Check app is running
+        run: docker logs app
+      - name: check /about
+        run: curl localhost:3003/about | jq '.npm_package_version' -r

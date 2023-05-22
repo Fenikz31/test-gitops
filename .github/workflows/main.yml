@@ -33,11 +33,3 @@ jobs:
         run: sudo chown -R $USER:$USER node_modules/
       - name: Run app
         run: docker compose up -d
-
-  test:
-    runs-on: [ self-hosted, linux, x64, vm-01 ]
-    steps:
-      - name: Check app is running
-        run: docker logs app
-      - name: check /about
-        run: curl localhost:3003/about | jq '.npm_package_version' -r
