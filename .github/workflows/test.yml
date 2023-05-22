@@ -11,7 +11,14 @@ jobs:
     runs-on: [ self-hosted, linux, x64, vm-01 ]
     steps:
       - name: Reclaim cache directory
-        run: sudo chown -R $USER:$USER node_modules/
+        run: |
+          if [ -d "node_modules" ]
+            then sudo chown -R 1000:1000 node_modules/
+          fi
+
+      - name: Run app
+        run: docker compose up -d
+
       - name: check /about
         id: package_version
         run: |
