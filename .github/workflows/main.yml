@@ -20,16 +20,16 @@ jobs:
         run: npm install -g yarn
       - name: Install dependencies
         run: yarn
-      # - name: Cache node modules
-      #   uses: actions/cache@v3
-      #   env:
-      #     cache-name: cache-node-modules
-      #   with:
-      #     path: ~/.npm
-      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-      #     restore-keys: |
-      #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      # - name: Run app
-      #   run: docker compose up -d
-      # - name: check /about
-      #   run: curl localhost:3003/about | jq '.npm_package_version' -r
+      - name: Cache node modules
+        uses: actions/cache@v3
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+      - name: Run app
+        run: docker compose up -d
+      - name: check /about
+        run: curl localhost:3003/about | jq '.npm_package_version' -r
