@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - dev
-    - main
 
 jobs:
   deploy:
@@ -13,10 +12,24 @@ jobs:
       - name: Fetch repository
         uses: actions/checkout@v3
 
+      - name: Run app
+        run: docker compose up -d
+
       - name: Reclaim cache directory
         run: |
           if [ -d "node_modules" ]
-            then sudo chown -R $USER:$USER node_modules/
+          then sudo chown -R 1000:1000 node_modules/
           fi
-      - name: Run app
-        run: docker compose up -d
+  test:
+    needs: deploy
+    runs-on: [ self-hosted, linux, x64, vm-01 ]
+    steps:
+
+      - name: check /about
+        id: package_version
+        run: |
+          sleep 30
+          npm_package_version=$(curl localhost:3003/about | jq '.npm_package_version' -r)
+          if [ $npm_package_version ];
+            then echo $npm_package_version && exit 0; else exit 1
+          fi
