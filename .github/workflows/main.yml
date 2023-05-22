@@ -11,18 +11,20 @@ jobs:
     runs-on: [ self-hosted, linux, x64, vm ]
     steps:
       - uses: actions/checkout@v3
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-        with:
-          image: tonistiigi/binfmt:latest
-          platforms: all
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '19'
-      - name: Set up yarn globally
-        run: npm install -g yarn
-      - name: Install dependencies
-        run: yarn
+      - name: Test docker
+        run: docker info
+      # - name: Set up QEMU
+      #   uses: docker/setup-qemu-action@v1
+      #   with:
+      #     image: tonistiigi/binfmt:latest
+      #     platforms: all
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '19'
+      # - name: Set up yarn globally
+      #   run: npm install -g yarn
+      # - name: Install dependencies
+      #   run: yarn
       # - name: Cache node modules
       #   uses: actions/cache@v3
       #   env:
@@ -32,7 +34,7 @@ jobs:
       #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
       #     restore-keys: |
       #       ${{ runner.os }}-build-${{ env.cache-name }}-
-      - name: Run app
-        run: docker compose up -d
-      - name: check /about
-        run: curl localhost:3003/about | jq '.npm_package_version' -r
+      # - name: Run app
+      #   run: docker compose up -d
+      # - name: check /about
+      #   run: curl localhost:3003/about | jq '.npm_package_version' -r
