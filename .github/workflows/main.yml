@@ -1,4 +1,4 @@
-name: learn-github-actions
+name: learn-github-actions-deploy
 run-name: ${{ github.actor }} is learning GitHub Actions
 on:
   push:
@@ -12,24 +12,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '19'
-      - name: Set up yarn globally
-        run: npm install -g yarn
-      - name: Install dependencies
-        run: yarn
-      - name: Cache node modules
-        uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
+      # - uses: actions/setup-node@v3
+      #   with:
+      #     node-version: '19'
+      # - name: Set up yarn globally
+      #   run: npm install -g yarn
+      # - name: Install dependencies
+      #   run: yarn
+      # - name: Cache node modules
+      #   uses: actions/cache@v3
+      #   env:
+      #     cache-name: cache-node-modules
+      #   with:
+      #     path: ~/.npm
+      #     key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-build-${{ env.cache-name }}-
 
-      - name: Reclaim cache directory
-        run: sudo chown -R $USER:$USER node_modules/
+      # - name: Reclaim cache directory
+      #   run: sudo chown -R $USER:$USER node_modules/
       - name: Run app
         run: docker compose up -d
