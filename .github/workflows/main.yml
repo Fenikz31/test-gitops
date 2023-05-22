@@ -8,7 +8,7 @@ on:
 
 jobs:
   check-package-version:
-    runs-on: [self-hosted, linux, x64]
+    runs-on: [ self-hosted, linux, x64, vm ]
     steps:
       - uses: actions/checkout@v3
       - name: Set up QEMU
