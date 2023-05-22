@@ -12,6 +12,15 @@ jobs:
       - name: Fetch repository
         uses: actions/checkout@v3
 
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20.2.x
+          cache: npm
+
+      - name: Setup npm and yarn globally
+        run: npm i -g npm@latest yarn
+
       - name: check node version
         run: node -v
 
