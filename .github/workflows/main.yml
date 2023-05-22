@@ -1,5 +1,5 @@
 name: learn-github-actions-deploy
-run-name: ${{ github.actor }} is learning GitHub Actions
+run-name: ${{ github.actor }} is learning GitHub Actions deploy
 on:
   push:
     branches:
