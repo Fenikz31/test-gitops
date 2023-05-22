@@ -12,6 +12,15 @@ jobs:
       - name: Fetch repository
         uses: actions/checkout@v3
 
+      - name: check node version
+        run: node -v
+
+      - name: check npm version
+        run: npm -v
+
+      - name: check yarn version
+        run: yarn -v
+
       - name: Install dependencies
         run: yarn
 
