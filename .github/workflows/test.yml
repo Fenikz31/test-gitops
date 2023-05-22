@@ -22,7 +22,9 @@ jobs:
       - name: check /about
         id: package_version
         run: |
-          sleep 5
+          time
+          sleep 30
+          time
           if [ $(curl localhost:3003/about | jq '.npm_package_version' -r) = 1.0.0 ];
             then exit 0; else exit 1
           fi

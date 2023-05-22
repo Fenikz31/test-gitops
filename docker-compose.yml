@@ -6,6 +6,8 @@ services:
     command: sh -c 'yarn && yarn dev'
     container_name: app
     environment:
+      GID: 1000
+      UID: 1000
       PORT: ${PORT:-3003}
     working_dir: /usr/share/app
     ports:
