@@ -12,14 +12,12 @@ jobs:
       - name: Fetch repository
         uses: actions/checkout@v3
 
+      - name: Install dependencies
+        run: yarn
+
       - name: Run app
         run: docker compose up -d
 
-      - name: Reclaim cache directory
-        run: |
-          if [ -d "node_modules" ]
-          then sudo chown -R 1000:1000 node_modules/
-          fi
   test:
     needs: deploy
     runs-on: [ self-hosted, linux, x64, vm-01 ]
@@ -28,7 +26,7 @@ jobs:
       - name: check /about
         id: package_version
         run: |
-          sleep 30
+          sleep 90
           npm_package_version=$(curl localhost:3003/about | jq '.npm_package_version' -r)
           if [ $npm_package_version ];
             then echo $npm_package_version && exit 0; else exit 1
