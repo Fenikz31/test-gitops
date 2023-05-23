@@ -19,6 +19,7 @@ jobs:
 
       - name: Start app instance
         run: yarn watch
+        if: failure()
 
       - name: check /about
         id: package_version
