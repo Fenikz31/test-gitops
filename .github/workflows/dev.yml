@@ -1,0 +1,30 @@
+name: dev
+run-name: ${{ github.actor }} is learning GitHub Actions deploy
+on:
+  pull_request:
+    branches:
+      - dev
+    types: [ edited]
+  push:
+    branches:
+    - dev
+
+
+jobs:
+  test:
+    runs-on: [ self-hosted, linux, x64, vm-01 ]
+    steps:
+      - name: Delete app instance
+        run: yarn stop
+
+      - name: Start app instance
+        run: yarn watch
+
+      - name: check /about
+        id: package_version
+        run: |
+          sleep 90
+          npm_package_version=$(curl localhost:3002/about | jq '.npm_package_version' -r)
+          if [ $npm_package_version ];
+            then echo $npm_package_version && exit 0; else exit 1
+          fi
