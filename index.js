@@ -15,4 +15,12 @@ app.get( '/about', ( req, res ) => {
   })
 })
 
-app.listen( port, () => console.log( `App started on port :${ port } ` ))
+app.listen( port, () => {
+  console.log( `App started on port :${ port }` )
+  process.send( 'ready' )
+})
+
+process.on( 'SIGINT', () => {
+  console.log( `Terminating application.` )
+  process.exit( 0 );
+})

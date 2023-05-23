@@ -1,5 +1,5 @@
-name: learn-github-actions-deploy
-run-name: ${{ github.actor }} is learning GitHub Actions deploy
+name: Setup app
+run-name: ${{ github.actor }} is setting up app
 on:
   push:
     branches:
@@ -18,18 +18,6 @@ jobs:
           node-version: 20.2.x
           cache: npm
 
-      - name: Setup npm and yarn globally
-        run: npm i -g npm@latest yarn
-
-      - name: check node version
-        run: node -v
-
-      - name: check npm version
-        run: npm -v
-
-      - name: check yarn version
-        run: yarn -v
-
       - name: Install dependencies
         run: yarn
 
@@ -37,20 +25,3 @@ jobs:
         with:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-
-      - name: Run app
-        run: docker compose up -d
-
-  test:
-    needs: deploy
-    runs-on: [ self-hosted, linux, x64, vm-01 ]
-    steps:
-
-      - name: check /about
-        id: package_version
-        run: |
-          sleep 90
-          npm_package_version=$(curl localhost:3003/about | jq '.npm_package_version' -r)
-          if [ $npm_package_version ];
-            then echo $npm_package_version && exit 0; else exit 1
-          fi
