@@ -25,3 +25,10 @@ jobs:
 
       - name: Install dependencies
         run: yarn
+
+      - name: Delete app instance
+        run: yarn stop
+
+      - name: Start app instance
+        run: yarn watch
+        if: failure()

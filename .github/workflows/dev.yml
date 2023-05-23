@@ -14,12 +14,12 @@ jobs:
   test:
     runs-on: [ self-hosted, linux, x64, vm-01 ]
     steps:
-      - name: Delete app instance
-        run: yarn stop
+      # - name: Delete app instance
+      #   run: yarn stop
 
-      - name: Start app instance
-        run: yarn watch
-        if: failure()
+      # - name: Start app instance
+      #   run: yarn watch
+      #   if: failure()
 
       - name: check /about
         id: package_version
