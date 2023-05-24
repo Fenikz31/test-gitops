@@ -41,8 +41,8 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
 
-      - name: Delete app instance
-        run: yarn stop
+      # - name: Delete app instance
+      #   run: yarn stop
 
       - name: Start app instance
         run: yarn watch
