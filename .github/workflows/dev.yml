@@ -10,10 +10,10 @@ on:
 
 
 jobs:
-  test:
+  build:
     runs-on: [ self-hosted, linux, x64, vm-01 ]
     steps:
-      - name: executing remote ssh commands using password
+      - name: executing remote ssh commands
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -22,6 +22,7 @@ jobs:
           script: |
             cd ${{ secrets.WORK_DIR }}
             ls -alh
+            echo ${{ github }}
       # - name: Delete app instance
       #   run: yarn stop
 
