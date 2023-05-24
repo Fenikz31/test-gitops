@@ -22,11 +22,13 @@ jobs:
           script: |
             cd ${{ secrets.WORK_DIR }}
             ls -alh
-            echo  ${{ github.repositoryUrl }}
-            if [ -d ${{ secrets.WORK_DIR }}/tests ];
-              then cd tests && git pull;
-              else git clone ${{ github.repositoryUrl }} && cd tests
-            fi
+            ssh -T git@github.com
+
+          # echo  ${{ github.repositoryUrl }}
+          # if [ -d ${{ secrets.WORK_DIR }}/test-gitops ];
+          #   then cd tests && git pull;
+          #   else git clone ${{ github.repositoryUrl }} && cd test-gitops
+          # fi
       # - name: Delete app instance
       #   run: yarn stop
 
