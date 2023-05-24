@@ -1,0 +1,54 @@
+name: Setup app
+run-name: ${{ github.actor }} is setting up app
+on:
+  push:
+    branches:
+    - dev
+
+jobs:
+  deploy:
+    runs-on: [ self-hosted, linux, x64, vm-01 ]
+    container: node:20
+    steps:
+      - name: Fetch repository
+        uses: actions/checkout@v3
+      - name: check user id in runner
+        run: id
+      - name: check $user  variable in runner
+        run: echo $USER
+
+      # - name: Setup node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 20.2.x
+      #     cache: yarn
+
+      # - name: Get yarn cache directory path
+      #   id: yarn-cache-dir-path
+      #   run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      # - name: Install global dependencies
+      #   run: yarn global add pm2
+
+      # - uses: actions/cache@v3
+      #   id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+      #   with:
+      #     path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+      #     key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-yarn-
+
+      # - name: Install dependencies
+      #   run: yarn
+
+      # - uses: actions/cache@v3
+      #   with:
+      #     path: '**/node_modules'
+      #     key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+
+      # - name: Delete app instance
+      #   run: yarn stop
+
+      # - name: Start app instance
+      #   run: yarn watch
+      #   # if: failure()
