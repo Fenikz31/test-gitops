@@ -21,18 +21,20 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             cd ${{ secrets.WORK_DIR }}
-            ls -alh
             echo  ${{ github.repositoryUrl }}
+            echo Pull new code ...
             if [ -d ${{ secrets.WORK_DIR }}/test-gitops ];
-              then cd test-gitops && git pull;
-              else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops
+            then cd test-gitops && git pull;
+            else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops
             fi
+            echo Start app instance ...
+            yarn watch
       # - name: Delete app instance
       #   run: yarn stop
       #   continue-on-error: true
 
-      - name: Start app instance
-        run: yarn watch
+      # - name: Start app instance
+      #   run: yarn watch
 
       # - name: check /about
       #   id: package_version
