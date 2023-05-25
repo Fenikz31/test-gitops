@@ -11,7 +11,8 @@ const app = express()
 app.get( '/about', ( req, res ) => {
   return res.status( 200 ).json({
     npm_package_name,
-    npm_package_version
+    npm_package_version,
+    status: 'success'
   })
 })
 
