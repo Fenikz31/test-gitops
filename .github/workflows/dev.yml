@@ -23,17 +23,14 @@ jobs:
             source ~/.zshrc
             cd ${{ secrets.WORK_DIR }}
             echo  ${{ github.repositoryUrl }}
-            echo  ${{ github.ref_name }}
             echo 'Pull new code ...'
             if [ -d ${{ secrets.WORK_DIR }}/test-gitops ];
             then cd test-gitops && git pull;
-            else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops && git checkout dev
+            else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops
             fi
+            echo 'Checkout to branch ${{ github.ref_name }} ...'
+            git checkout ${{ github.ref_name }}
             echo 'Start app instance ...'
-            node -v
-            npm -v
-            yarn -v
-            pm2 -v
             yarn watch
       # - name: Delete app instance
       #   run: yarn stop
