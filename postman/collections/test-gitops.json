@@ -3,15 +3,17 @@
 		"_postman_id": "bd78360e-2852-478a-a37c-80fc9eafaadd",
 		"name": "test-gitops",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "8416304"
+		"_uid": "8416304-bd78360e-2852-478a-a37c-80fc9eafaadd"
 	},
 	"item": [
 		{
-			"name": "Check package version",
+			"name": "Get info",
 			"event": [
 				{
 					"listen": "test",
 					"script": {
+						"id": "32eb9f6c-1134-420b-acb0-1c05f11117ab",
+						"type": "text/javascript",
 						"exec": [
 							"const response = pm.response.json()\r",
 							"\r",
@@ -22,11 +24,14 @@
 							"pm.test('Your test name', function () {\r",
 							"  pm.expect( response.status ).to.eql( 'success' );\r",
 							"});"
-						],
-						"type": "text/javascript"
+						]
 					}
 				}
 			],
+			"id": "96f69368-619e-4b7c-bbb2-fe5482a183f2",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -41,7 +46,37 @@
 					]
 				}
 			},
-			"response": []
+			"response": [
+				{
+					"id": "aa073622-c792-43e1-8b52-70131d8312bc",
+					"name": "Get info about the app",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}:{{PORT}}/about",
+							"host": [
+								"{{HOST}}"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"about"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "Text",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						}
+					],
+					"cookie": [],
+					"body": "{\n  \"npm_package_name\": \"<string>\",\n  \"npm_package_version\": \"<string>\",\n  \"status\": \"<boolean>\"\n}"
+				}
+			]
 		}
 	]
 }
