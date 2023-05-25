@@ -30,6 +30,8 @@ jobs:
             fi
             echo 'Checkout to branch ${{ github.ref_name }} ...'
             git checkout ${{ github.ref_name }}
+            echo 'Installing dependencies ...'
+            yarn
             echo 'Start app instance ...'
             yarn watch
       # - name: Delete app instance
