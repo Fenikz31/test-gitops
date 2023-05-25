@@ -34,18 +34,11 @@ jobs:
             yarn
             echo 'Start app instance ...'
             yarn watch
-      # - name: Delete app instance
-      #   run: yarn stop
-      #   continue-on-error: true
 
-      # - name: Start app instance
-      #   run: yarn watch
-
-      # - name: check /about
-      #   id: package_version
-      #   run: |
-      #     sleep 90
-      #     npm_package_version=$(curl localhost:3002/about | jq '.npm_package_version' -r)
-      #     if [ $npm_package_version ];
-      #       then echo $npm_package_version && exit 0; else exit 1
-      #     fi
+      - name: check /about
+        id: package_version
+        run: |
+          npm_package_version=$(curl ${{ secrets.SSH_HOST }}:3002/about | jq '.npm_package_version' -r)
+          if [ $npm_package_version ];
+            then echo $npm_package_version && exit 0; else exit 1
+          fi
