@@ -20,6 +20,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
+            source ~/.zshrc
             cd ${{ secrets.WORK_DIR }}
             echo  ${{ github.repositoryUrl }}
             echo 'Pull new code ...'
