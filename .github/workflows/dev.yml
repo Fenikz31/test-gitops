@@ -23,10 +23,11 @@ jobs:
             source ~/.zshrc
             cd ${{ secrets.WORK_DIR }}
             echo  ${{ github.repositoryUrl }}
+            echo  ${{ github.ref_name }}
             echo 'Pull new code ...'
             if [ -d ${{ secrets.WORK_DIR }}/test-gitops ];
             then cd test-gitops && git pull;
-            else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops
+            else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops && git checkout dev
             fi
             echo 'Start app instance ...'
             node -v
