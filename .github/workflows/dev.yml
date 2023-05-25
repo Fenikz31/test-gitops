@@ -35,10 +35,20 @@ jobs:
             echo 'Start app instance ...'
             yarn watch
 
-      - name: check /about
-        id: package_version
+      # - name: check /about
+      #   id: package_version
+      #   run: |
+      #     npm_package_version=$(curl ${{ secrets.SSH_HOST }}:3002/about | jq '.npm_package_version' -r)
+      #     if [ $npm_package_version ];
+      #       then echo $npm_package_version && exit 0; else exit 1
+      #     fi
+
+      - uses: actions/checkout@v3
+      - name: Install Postman CLI
         run: |
-          npm_package_version=$(curl ${{ secrets.SSH_HOST }}:3002/about | jq '.npm_package_version' -r)
-          if [ $npm_package_version ];
-            then echo $npm_package_version && exit 0; else exit 1
-          fi
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+      - name: Run API tests
+        run: |
+          postman collection run "${{ github.workspace }}/postman/collections/test-gitops.json" -e "8416304-a2b75a3d-df09-4a45-b938-b5e566d6bdca" --integration-id "141216-${{ github.run_id }}"
