@@ -1,0 +1,34 @@
+openapi: '3.0.0'
+info:
+  version: '1.0.0'
+  title: 'test-gitops'
+  description: Take on CI/CD the gitops way
+servers:
+  - url: host
+paths:
+  /about:
+    get:
+      summary: Get info
+      responses:
+        '200':
+          description: Get info about the app
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - npm_package_name
+                  - npm_package_version
+                  - status
+                properties:
+                  npm_package_name:
+                    type: string
+                  npm_package_version:
+                    type: string
+                  status:
+                    type: boolean
+components:
+  schemas: {}
+  securitySchemes: {}
+security:
+  - ApiKey: []

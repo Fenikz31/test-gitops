@@ -1,0 +1,32 @@
+apps :
+  - name: test-gitops
+    script: index.js
+    env:
+      NODE_ENV: development
+      PORT: '3002'
+
+    env_production:
+      NODE_ENV: production
+      PORT: '3005'
+
+    env_staging:
+      NODE_ENV: staging
+      PORT: '3004'
+
+    env_test:
+      NODE_ENV: test
+
+    ignore_watch:
+      - node_modules
+    listen_timeout: 10000
+    wait_ready: true
+    watch: true
+
+deploy :
+  production :
+    user : SSH_USERNAME
+    host : SSH_HOSTMACHINE
+    ref  : origin/master
+    repo : GIT_REPOSITORY
+    path : DESTINATION_PATH
+    post-deploy : npm install && pm2 reload ecosystem.config.js --env production

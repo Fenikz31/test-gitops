@@ -7,7 +7,10 @@
   "author": "Fenikz <fenikz31@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "node --watch index"
+    "stop": "pm2 delete test-gitops",
+    "dev": "node --watch index",
+    "watch": "pm2 start ecosystem.config.yml",
+    "start": "pm2 start ecosystem.config.yml --env production"
   },
   "dependencies": {
     "chalk": "^5.2.0",

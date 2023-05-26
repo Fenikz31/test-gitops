@@ -1,0 +1,52 @@
+name: dev
+run-name: ${{ github.actor }} build ${{ github.repository }}
+permissions:
+  contents: write
+on:
+  pull_request:
+    branches:
+      - dev
+  push:
+    branches:
+    - dev
+
+jobs:
+  build:
+    runs-on: [ self-hosted, linux, x64, vm-01 ]
+    steps:
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            source ~/.zshrc
+            cd ${{ secrets.WORK_DIR }}
+            echo  ${{ github.repositoryUrl }}
+            echo 'Pull new code ...'
+            if [ -d ${{ secrets.WORK_DIR }}/test-gitops ];
+            then cd test-gitops && git pull;
+            else git clone https://github.com/Links-Corp/test-gitops.git && cd test-gitops
+            fi
+            echo 'Checkout to branch ${{ github.ref_name }} ...'
+            git checkout ${{ github.ref_name }}
+            echo 'Installing dependencies ...'
+            yarn
+            echo 'Start app instance ...'
+            yarn watch
+
+      - uses: actions/checkout@v3
+
+      - name: Install Postman CLI
+        run: |
+          curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+
+      - name: Login to Postman CLI
+        run: postman login --with-api-key ${{ secrets.POSTMAN_API_KEY }}
+
+      - name: Run API tests
+        run: |
+          postman collection run "${{ github.workspace }}/postman/collections/test-gitops.json" -e "8416304-a2b75a3d-df09-4a45-b938-b5e566d6bdca" --integration-id "141216-${{ github.run_id }}"
+          # Lint your API using Postman CLI
+          # postman api lint cebba2f2-e07a-4d0b-9de7-b3aedcd37c52 --integration-id 141216
