@@ -1,5 +1,7 @@
 name: dev
 run-name: ${{ github.actor }} build ${{ github.repository }}
+permissions:
+  contents: write
 on:
   pull_request:
     branches:
@@ -7,7 +9,6 @@ on:
   push:
     branches:
     - dev
-
 
 jobs:
   build:
