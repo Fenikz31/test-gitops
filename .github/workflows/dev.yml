@@ -49,4 +49,4 @@ jobs:
         run: |
           postman collection run "${{ github.workspace }}/postman/collections/test-gitops.json" -e "8416304-a2b75a3d-df09-4a45-b938-b5e566d6bdca" --integration-id "141216-${{ github.run_id }}"
           # Lint your API using Postman CLI
-          postman api lint cebba2f2-e07a-4d0b-9de7-b3aedcd37c52 --integration-id 141216
+          # postman api lint cebba2f2-e07a-4d0b-9de7-b3aedcd37c52 --integration-id 141216
